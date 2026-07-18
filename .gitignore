@@ -1,0 +1,12 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local tooling
+.claude/
+node_modules/
+
+# Python build helper (Pillow) artifacts
+__pycache__/
+*.pyc
