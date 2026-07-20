@@ -250,8 +250,8 @@ form{display:grid;gap:22px}
 /* ===== SUPERCAR CAROUSEL ===== */
 .carousel{position:relative;overflow:hidden}
 .car-track{display:flex;transition:transform .75s var(--ease)}
-.car-slide{min-width:100%;margin:0;position:relative}
-.car-slide img{width:100%;height:clamp(420px,68vh,640px);object-fit:cover;object-position:center 45%}
+.car-slide{min-width:100%;margin:0;position:relative;background:#050505}
+.car-slide img{width:100%;height:clamp(420px,68vh,640px);object-fit:contain}
 .car-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:70px 48px 30px;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--champagne);font-weight:600;background:linear-gradient(0deg,rgba(4,4,4,.8),transparent);text-align:left}
 .car-prev,.car-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,8,8,.55);border:1px solid rgba(222,190,143,.4);color:var(--champagne);width:54px;height:54px;border-radius:50%;font-size:30px;line-height:1;cursor:pointer;transition:all .3s;z-index:3;display:flex;align-items:center;justify-content:center;padding-bottom:4px}
 .car-prev{left:22px}.car-next{right:22px}
