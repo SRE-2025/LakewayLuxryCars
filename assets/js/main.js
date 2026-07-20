@@ -10,6 +10,8 @@
   }
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0.12});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  // cinematic wipe reveals on media blocks
+  document.querySelectorAll('.split-media, .model-media, .contact-photo, .showcase-main').forEach(function(el){el.classList.add('reveal-img');io.observe(el)});
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(q){
