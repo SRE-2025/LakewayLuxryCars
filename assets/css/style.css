@@ -224,7 +224,7 @@ form{display:grid;gap:22px}
 .campaign-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}
 .campaign-grid figure{margin:0;box-shadow:0 30px 80px rgba(0,0,0,.55);border:1px solid rgba(222,190,143,.16);transition:transform .5s var(--ease),border-color .5s}
 .campaign-grid figure:hover{transform:translateY(-8px);border-color:rgba(222,190,143,.45)}
-.campaign-grid img{width:100%;height:auto;display:block}
+.campaign-grid img{width:100%;height:auto;display:block;aspect-ratio:4/5;object-fit:cover}
 
 /* ===== FLAGSHIP SHOWCASE (See Every Corner) ===== */
 .showcase{display:grid;gap:14px;max-width:1100px;margin:0 auto}
