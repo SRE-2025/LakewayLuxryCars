@@ -13,7 +13,7 @@
   --sans:'Jost',system-ui,-apple-system,sans-serif;
   --serif:'Cinzel',Georgia,serif;
   --ease:cubic-bezier(.19,1,.22,1);
-  --nav-h:120px;
+  --nav-h:108px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -53,15 +53,22 @@ header.scrolled{box-shadow:0 10px 34px rgba(0,0,0,.5)}
 .topbar{border-bottom:1px solid rgba(222,190,143,.13);overflow:hidden;max-height:40px;transition:max-height .45s var(--ease),opacity .3s}
 header.scrolled .topbar{max-height:0;opacity:0}
 .topbar .tb{display:flex;justify-content:space-between;align-items:center;padding-top:9px;padding-bottom:9px;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:#8a8478}
-.navbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0;transition:padding .4s var(--ease)}
-header.scrolled .navbar{padding:7px 0}
+.navbar{display:flex;align-items:center;padding:14px 0;transition:padding .4s var(--ease)}
+header.scrolled .navbar{padding:8px 0}
 .brand{display:flex;align-items:center}
-.brand img{width:auto;height:60px;transition:height .4s var(--ease);filter:drop-shadow(0 4px 18px rgba(0,0,0,.55))}
-header.scrolled .brand img{height:48px}
+.brand-mobile{display:none}
+.brand-mobile img{height:44px;width:auto}
 .brand-text{display:none}
 .tb-link{color:var(--champagne);transition:color .3s;border-bottom:1px solid rgba(222,190,143,.35);padding-bottom:2px}
 .tb-link:hover{color:#fff;border-color:#fff}
 .nav-links{display:flex;align-items:center;gap:36px}
+/* Paddock spread: links distributed, monogram centered */
+.nav-links.nb-spread{width:100%;justify-content:space-between;gap:0}
+.nb-spread .ng{flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:12px}
+.nb-mark{display:flex;align-items:center;padding:0 14px}
+.nb-mark img{height:44px;width:auto;transition:height .4s var(--ease),transform .4s var(--ease);filter:drop-shadow(0 3px 12px rgba(0,0,0,.6))}
+.nb-mark:hover img{transform:scale(1.07)}
+header.scrolled .nb-mark img{height:36px}
 .nav-links a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);font-weight:500;position:relative;padding:4px 0;transition:color .3s}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--champagne);transition:width .4s var(--ease)}
 .nav-links a:hover,.nav-links a.active{color:#fff}
@@ -445,8 +452,9 @@ body.entered .hero-media img{transform:scale(1)}
 }
 @media(max-width:860px){
   .topbar{display:none}
-  .brand img{height:44px}
-  header.scrolled .brand img{height:38px}
+  .brand-mobile{display:flex}
+  .navbar{justify-content:space-between}
+  .nav-links .nb-mark{display:none}
   .campaign-grid{grid-template-columns:1fr}
   .nav-links{position:fixed;inset:0;background:rgba(8,8,8,.99);flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .5s var(--ease)}
   .nav-links.open{transform:none}
@@ -455,6 +463,7 @@ body.entered .hero-media img{transform:scale(1)}
   .drop{position:static;transform:none;opacity:1;visibility:visible;background:none;border:none;box-shadow:none;padding:0;min-width:0}
   .has-drop:hover .drop{transform:none}
   .drop a{padding:8px 0;font-size:12px;text-align:center;color:#b7b1a6!important}
+  .nb-spread .ng{display:contents}
   .drop .drop-sub{display:none}
   .nav-links{overflow-y:auto;padding:90px 0 40px;align-items:center}
   .ng{display:contents}
