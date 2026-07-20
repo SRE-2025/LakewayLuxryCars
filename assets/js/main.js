@@ -21,12 +21,41 @@
       else if(replay){el.classList.remove('in');}
     }
   }
+  // panels join the reveal engine (staggered text rise)
+  document.querySelectorAll('.panel').forEach(function(el){revealEls.push(el)});
+  // scroll progress hairline
+  var prog=document.createElement('div'); prog.className='scroll-progress'; document.body.appendChild(prog);
+  // parallax depth on panel backgrounds
+  var pxPanels=Array.prototype.slice.call(document.querySelectorAll('.panel .bg img'));
+  function fx(){
+    var vh=window.innerHeight;
+    var max=document.body.scrollHeight-vh;
+    prog.style.width=(max>0?(window.scrollY/max*100):0)+'%';
+    for(var i=0;i<pxPanels.length;i++){
+      var r=pxPanels[i].parentElement.getBoundingClientRect();
+      if(r.bottom<0||r.top>vh) continue;
+      var t=((r.top+r.height/2)/vh-0.5)*36;
+      pxPanels[i].style.transform='translateY('+t.toFixed(1)+'px) scale(1.12)';
+    }
+  }
   var rvLast=0;
-  function onRv(){ var n=Date.now(); if(n-rvLast<80) return; rvLast=n; checkReveals(); }
+  function onRv(){ var n=Date.now(); if(n-rvLast<60) return; rvLast=n; checkReveals(); fx(); }
   window.addEventListener('scroll',onRv,{passive:true});
   window.addEventListener('resize',onRv);
-  checkReveals(); setTimeout(checkReveals,350); window.addEventListener('load',checkReveals);
-  setInterval(checkReveals,450); /* safety net: guarantees reveals in throttled/background contexts */
+  checkReveals(); fx(); setTimeout(function(){checkReveals();fx();},350); window.addEventListener('load',checkReveals);
+  setInterval(function(){checkReveals();fx();},450); /* safety net: guarantees reveals in throttled/background contexts */
+  // entrance choreography
+  setTimeout(function(){document.body.classList.add('entered')},90);
+  // magnetic buttons
+  document.querySelectorAll('.btn').forEach(function(b){
+    b.style.transition=b.style.transition||'';
+    b.addEventListener('mousemove',function(e){
+      var r=b.getBoundingClientRect();
+      var dx=(e.clientX-(r.left+r.width/2))/r.width, dy=(e.clientY-(r.top+r.height/2))/r.height;
+      b.style.transform='translate('+(dx*7).toFixed(1)+'px,'+(dy*5).toFixed(1)+'px)';
+    });
+    b.addEventListener('mouseleave',function(){ b.style.transform=''; });
+  });
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(q){

@@ -93,7 +93,7 @@ header.scrolled .nav-links{padding:0 0 10px}
 /* hero slideshow (homepage) */
 .hero-media img.hs{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease)}
 .hero-media img.hs.on{opacity:1}
-.hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out infinite alternate}
+body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2.5s infinite alternate}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.09) translate(-1.2%,-1%)}}
 .hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,6,6,.86) 0%,rgba(6,6,6,.32) 44%,rgba(6,6,6,.42) 100%)}
 .hero-inner{position:relative;z-index:2;max-width:880px}
@@ -314,6 +314,35 @@ footer{background:#0a0a0a;border-top:1px solid rgba(222,190,143,.22);padding:74p
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 .no-js .reveal{opacity:1;transform:none}
+
+/* scroll progress hairline */
+.scroll-progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--champagne),var(--crimson-light));z-index:300;transition:width .12s linear}
+
+/* hero entrance choreography */
+.hero-inner .eyebrow,.hero-inner h1,.hero-inner p,.hero-inner .hero-actions{opacity:0;transform:translateY(36px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+body.entered .hero-inner .eyebrow{opacity:1;transform:none;transition-delay:.15s}
+body.entered .hero-inner h1{opacity:1;transform:none;transition-delay:.32s}
+body.entered .hero-inner p{opacity:1;transform:none;transition-delay:.5s}
+body.entered .hero-inner .hero-actions{opacity:1;transform:none;transition-delay:.68s}
+.hero-media img{transform:scale(1.12);transition:transform 2.4s var(--ease)}
+body.entered .hero-media img{transform:scale(1)}
+.no-js .hero-inner .eyebrow,.no-js .hero-inner h1,.no-js .hero-inner p,.no-js .hero-inner .hero-actions{opacity:1;transform:none}
+
+/* panel text stagger (masked rise) */
+.panel .tag,.panel .word,.panel .go{opacity:0;transform:translateY(44px);transition:opacity .95s var(--ease),transform .95s var(--ease)}
+.panel.in .tag{transition-delay:.05s}
+.panel.in .word{transition-delay:.16s}
+.panel.in .go{transition-delay:.32s}
+.panel.in .tag,.panel.in .word,.panel.in .go{opacity:1;transform:none}
+.no-js .panel .tag,.no-js .panel .word,.no-js .panel .go{opacity:1;transform:none}
+.panel .bg img{will-change:transform}
+
+/* giant outline ticker */
+.ticker{overflow:hidden;background:#050505;border-top:1px solid rgba(222,190,143,.14);border-bottom:1px solid rgba(222,190,143,.14);padding:56px 0}
+.tk-track{display:flex;width:max-content;animation:tkroll 46s linear infinite}
+.ticker:hover .tk-track{animation-play-state:paused}
+.tk-track span{font-weight:800;font-size:clamp(58px,9vw,128px);line-height:1;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:transparent;-webkit-text-stroke:1.2px rgba(222,190,143,.55);padding-right:40px}
+@keyframes tkroll{to{transform:translateX(-50%)}}
 /* staggered cards */
 .grid3 .card.reveal:nth-child(2){transition-delay:.14s}
 .grid3 .card.reveal:nth-child(3){transition-delay:.28s}
