@@ -8,10 +8,25 @@
     burger.addEventListener('click',function(){links.classList.toggle('open')});
     links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open')})});
   }
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
-  // cinematic wipe reveals on media blocks
-  document.querySelectorAll('.split-media, .model-media, .contact-photo, .showcase-main').forEach(function(el){el.classList.add('reveal-img');io.observe(el)});
+  // Reveal engine — scroll-position based (no IntersectionObserver dependency)
+  document.querySelectorAll('.split-media, .model-media, .contact-photo, .showcase-main').forEach(function(el){el.classList.add('reveal-img')});
+  var revealEls=Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-img'));
+  function checkReveals(){
+    var vh=window.innerHeight;
+    for(var i=revealEls.length-1;i>=0;i--){
+      var el=revealEls[i], r=el.getBoundingClientRect();
+      var vis=r.top<vh*0.9 && r.bottom>vh*0.05;
+      var replay=el.closest('.statement');
+      if(vis){el.classList.add('in'); if(!replay) revealEls.splice(i,1);}
+      else if(replay){el.classList.remove('in');}
+    }
+  }
+  var rvLast=0;
+  function onRv(){ var n=Date.now(); if(n-rvLast<80) return; rvLast=n; checkReveals(); }
+  window.addEventListener('scroll',onRv,{passive:true});
+  window.addEventListener('resize',onRv);
+  checkReveals(); setTimeout(checkReveals,350); window.addEventListener('load',checkReveals);
+  setInterval(checkReveals,450); /* safety net: guarantees reveals in throttled/background contexts */
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(q){
@@ -167,14 +182,12 @@
   go(0); restart();
 })();
 
-/* Animated stat counters — numbers count up on reveal */
+/* Animated stat counters — numbers count up when scrolled into view */
 (function(){
-  var stats=document.querySelectorAll('.stat .n');
-  if(!stats.length||!('IntersectionObserver' in window)) return;
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(!e.isIntersecting) return; io.unobserve(e.target);
-    var el=e.target, txt=el.textContent.trim(), m=txt.match(/^([\d,]+)$/);
-    if(!m) return;
+  var stats=Array.prototype.slice.call(document.querySelectorAll('.stat .n'));
+  if(!stats.length) return;
+  function runCounter(el){
+    var m=el.textContent.trim().match(/^([\d,]+)$/); if(!m) return;
     var target=parseInt(m[1].replace(/,/g,''),10), t0=null;
     function step(ts){
       if(!t0) t0=ts;
@@ -183,8 +196,20 @@
       if(p<1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
-  })},{threshold:.6});
-  stats.forEach(function(s){io.observe(s)});
+  }
+  function checkStats(){
+    var vh=window.innerHeight;
+    for(var i=stats.length-1;i>=0;i--){
+      var r=stats[i].getBoundingClientRect();
+      if(r.top<vh*0.88 && r.bottom>0){ runCounter(stats[i]); stats.splice(i,1); }
+    }
+    if(!stats.length){ window.removeEventListener('scroll',onSt); }
+  }
+  var stLast=0;
+  function onSt(){ var n=Date.now(); if(n-stLast<120) return; stLast=n; checkStats(); }
+  window.addEventListener('scroll',onSt,{passive:true});
+  checkStats(); setTimeout(checkStats,350);
+  var stTimer=setInterval(function(){ checkStats(); if(!stats.length) clearInterval(stTimer); },450);
 })();
 
 /* Subtle hero parallax (subpages; homepage keeps its slow zoom) */
