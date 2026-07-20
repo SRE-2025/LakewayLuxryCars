@@ -48,8 +48,8 @@ h1,h2,h3{font-weight:600;line-height:1.12}
 .btn-sm{padding:12px 24px;font-size:10px}
 
 /* ===== NAV (brand black chrome, centered logo) ===== */
-header{position:fixed;top:0;left:0;width:100%;z-index:100;background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.25) 60%,transparent 100%);border-bottom:1px solid transparent;transition:background .45s var(--ease),box-shadow .45s,border-color .45s}
-header.scrolled{background:rgba(8,8,8,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(222,190,143,.18);box-shadow:0 10px 34px rgba(0,0,0,.5)}
+header{position:fixed;top:0;left:0;width:100%;z-index:100;background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.25) 60%,transparent 100%);transition:background .2s ease,box-shadow .2s ease}
+header.scrolled{background:#0a0a0a;box-shadow:0 12px 30px rgba(0,0,0,.45)}
 .topbar{background:#080808;border-bottom:none;overflow:hidden;max-height:40px;transition:max-height .45s var(--ease),opacity .3s}
 header.scrolled .topbar{max-height:0;opacity:0}
 .topbar .tb{display:flex;justify-content:space-between;align-items:center;padding-top:9px;padding-bottom:9px;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:#8a8478}
