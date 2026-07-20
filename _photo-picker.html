@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Photo Picker — 1301 O'Reilly Dr (39 photos)</title>
+<style>
+  :root { --gold:#c9a24b; --bg:#0a0a0a; --panel:#141414; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:#f4f2ee; font-family:Montserrat,Arial,sans-serif; }
+  header { padding:24px 28px; border-bottom:1px solid #2a2a2a; position:sticky; top:0; background:rgba(10,10,10,.95); backdrop-filter:blur(6px); z-index:5; }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:.02em; }
+  header p { margin:0; color:#9a9a9a; font-size:13px; }
+  .gold { color:var(--gold); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; padding:20px 28px 60px; }
+  figure { margin:0; background:var(--panel); border:1px solid #232323; border-radius:10px; overflow:hidden; }
+  figure img { width:100%; height:190px; object-fit:cover; display:block; cursor:zoom-in; }
+  figcaption { padding:8px 12px; font-size:13px; display:flex; justify-content:space-between; align-items:center; }
+  .idx { color:var(--gold); font-weight:600; }
+  .note { color:#8a8a8a; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>1301 O'Reilly Drive, Austin TX 78734 — <span class="gold">39 listing photos</span></h1>
+  <p>5,004 sqft luxury garage/residence · $1,695,000 · MLS #7358944 · built 2025. Click any photo to open full size. Refer to photos by their <span class="gold">#number</span> when telling me where each should go.</p>
+</header>
+<div class="grid" id="grid"></div>
+<script>
+  const grid = document.getElementById('grid');
+  for (let i=0;i<39;i++){
+    const n = String(i).padStart(2,'0');
+    const fig = document.createElement('figure');
+    fig.innerHTML =
+      '<a href="assets/img/property/photo-'+n+'.jpg" target="_blank">'+
+      '<img loading="lazy" src="assets/img/property/photo-'+n+'.jpg" alt="Photo '+i+'"></a>'+
+      '<figcaption><span class="idx">#'+i+'</span><span class="note">photo-'+n+'.jpg</span></figcaption>';
+    grid.appendChild(fig);
+  }
+</script>
+</body>
+</html>

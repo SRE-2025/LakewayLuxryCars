@@ -33,43 +33,190 @@
   var plan=document.getElementById('plan'); if(!plan) return;
   var P=function(k){return 'assets/img/'+k;};
   var SUITES={
-    'A1':{name:'The Summit · A1',model:'The Summit',page:'summit.html',status:'available',sqft:'6,000',bays:'10–12 cars + living',ceiling:'28 ft',price:'From $2,150,000',img:P('lineup.jpg')},
-    'A2':{name:'The Summit · A2',model:'The Summit',page:'summit.html',status:'sold',sqft:'6,000',bays:'10–12 cars + living',ceiling:'28 ft',price:'Sold',img:P('mclaren.jpg')},
-    'B1':{name:'The Overlook · B1',model:'The Overlook',page:'overlook.html',status:'available',sqft:'4,500',bays:'8–10 cars + living',ceiling:'26 ft',price:'From $1,650,000',img:P('dream-car.jpg')},
-    'B2':{name:'The Overlook · B2',model:'The Overlook',page:'overlook.html',status:'reserved',sqft:'4,500',bays:'8–10 cars + living',ceiling:'26 ft',price:'From $1,650,000',img:P('ferrari.jpg')},
-    'B3':{name:'The Overlook · B3',model:'The Overlook',page:'overlook.html',status:'available',sqft:'4,500',bays:'8–10 cars + living',ceiling:'26 ft',price:'From $1,650,000',img:P('lineup.jpg')},
-    'C1':{name:'The Ranch · C1',model:'The Ranch',page:'ranch.html',status:'sold',sqft:'3,000',bays:'6–8 cars + mezz',ceiling:'24 ft',price:'Sold',img:P('mclaren.jpg')},
-    'C2':{name:'The Ranch · C2',model:'The Ranch',page:'ranch.html',status:'available',sqft:'3,000',bays:'6–8 cars + mezz',ceiling:'24 ft',price:'From $1,180,000',img:P('dream-car.jpg')},
-    'C3':{name:'The Ranch · C3',model:'The Ranch',page:'ranch.html',status:'reserved',sqft:'3,000',bays:'6–8 cars + mezz',ceiling:'24 ft',price:'From $1,180,000',img:P('ferrari.jpg')},
-    'C4':{name:'The Ranch · C4',model:'The Ranch',page:'ranch.html',status:'available',sqft:'3,000',bays:'6–8 cars + mezz',ceiling:'24 ft',price:'From $1,180,000',img:P('lineup.jpg')},
-    'D1':{name:'The Retreat · D1',model:'The Retreat',page:'retreat.html',status:'available',sqft:'2,250',bays:'4–6 cars + loft',ceiling:'22 ft',price:'From $895,000',img:P('mclaren.jpg')},
-    'D2':{name:'The Retreat · D2',model:'The Retreat',page:'retreat.html',status:'available',sqft:'2,250',bays:'4–6 cars + loft',ceiling:'22 ft',price:'From $895,000',img:P('dream-car.jpg')},
-    'D3':{name:'The Retreat · D3',model:'The Retreat',page:'retreat.html',status:'reserved',sqft:'2,250',bays:'4–6 cars + loft',ceiling:'22 ft',price:'From $895,000',img:P('ferrari.jpg')},
-    'D4':{name:'The Retreat · D4',model:'The Retreat',page:'retreat.html',status:'available',sqft:'2,250',bays:'4–6 cars + loft',ceiling:'22 ft',price:'From $895,000',img:P('lineup.jpg')}
+    'L1':{name:'The Flagship Residence',model:'Completed · Move-In Ready',page:'residences.html',view:'Tour the Residence',status:'available',badge:'Move-In Ready',sqft:'5,004',bays:'Up to 10 cars + living',ceiling:'Two-story gallery',cta:'Book a Private Tour',img:P('property/photo-07.jpg')},
+    'L2':{name:'Residence Two',model:'Completed · The Twin Gallery',page:'contact.html?unit=Residence%20Two',view:'Contact Sales',status:'available',badge:'Completed',sqft:'Inquire',bays:'Twin gallery residence',ceiling:'Two-story gallery',cta:'Inquire About Residence Two',img:P('property/photo-09.jpg')},
+    'L3':{name:'Homesite L3',model:'Homesite',page:'availability.html',view:'View the Site Plan',status:'available',sqft:'Inquire',bays:'Details on request',ceiling:'Homesite',cta:'Inquire About This Homesite',img:P('property/photo-11.jpg')},
+    'L4':{name:'Homesite L4',model:'Homesite',page:'availability.html',view:'View the Site Plan',status:'available',sqft:'Inquire',bays:'Details on request',ceiling:'Homesite',cta:'Inquire About This Homesite',img:P('property/photo-15.jpg')},
+    'L5':{name:'Homesite L5',model:'Reserved',page:'availability.html',view:'View the Site Plan',status:'reserved',sqft:'Inquire',bays:'Details on request',ceiling:'Homesite',cta:'Join the Waitlist',img:P('property/photo-18.jpg')},
+    'L6':{name:'Homesite L6',model:'Homesite',page:'availability.html',view:'View the Site Plan',status:'available',sqft:'Inquire',bays:'Details on request',ceiling:'Homesite',cta:'Inquire About This Homesite',img:P('property/photo-19.jpg')}
   };
   var detail=document.getElementById('suiteDetail');
   function render(id){
     var s=SUITES[id]; if(!s) return;
     plan.querySelectorAll('.unit').forEach(function(u){u.classList.toggle('selected',u.dataset.id===id)});
     var sold=s.status!=='available';
-    var actions=sold
-      ? '<a class="btn btn-sm" href="contact.html?unit='+encodeURIComponent(s.name)+'">Join the Waitlist</a><a class="btn btn-sm" href="'+s.page+'">View '+s.model+'</a>'
-      : '<a class="btn btn-solid btn-sm" href="contact.html?unit='+encodeURIComponent(s.name)+'">Reserve This Unit</a><a class="btn btn-sm" href="'+s.page+'">View '+s.model+'</a>';
+    var primary=s.cta||(sold?'Join the Waitlist':'Reserve This Lot');
+    var actions='<a class="btn '+(sold?'':'btn-solid')+' btn-sm" href="contact.html?unit='+encodeURIComponent(s.name)+'">'+primary+'</a><a class="btn btn-sm" href="'+s.page+'">'+(s.view||'Learn More')+'</a>';
+    var sizeVal=(/^[\d,]+$/.test(s.sqft)?s.sqft+' sf':s.sqft);
     detail.innerHTML=
       '<img src="'+s.img+'" alt="'+s.name+'" style="width:calc(100% + 68px);max-width:none;height:190px;object-fit:cover;margin:-34px -34px 26px">'
-      +'<span class="sd-status '+s.status+'">'+s.status+'</span>'
+      +'<span class="sd-status '+s.status+'">'+(s.badge||s.status)+'</span>'
       +'<div class="sd-name">'+s.name+'</div>'
       +'<div class="sd-sub">'+s.model+' · Texas Hill Country</div>'
-      +'<div class="sd-specs"><div><div class="k">Interior</div><div class="v">'+s.sqft+' sf</div></div>'
+      +'<div class="sd-specs"><div><div class="k">Interior</div><div class="v">'+sizeVal+'</div></div>'
       +'<div><div class="k">Capacity</div><div class="v" style="font-size:16px">'+s.bays+'</div></div>'
-      +'<div><div class="k">Clear Height</div><div class="v">'+s.ceiling+'</div></div>'
-      +'<div><div class="k">Ownership</div><div class="v" style="font-size:16px">Deeded</div></div></div>'
-      +'<div class="sd-price">'+s.price+'</div><div class="sd-actions">'+actions+'</div>';
+      +'<div><div class="k">Gallery</div><div class="v" style="font-size:16px">'+s.ceiling+'</div></div>'
+      +'<div><div class="k">Ownership</div><div class="v" style="font-size:16px">Outright</div></div></div>'
+      +'<div class="sd-actions" style="margin-top:20px">'+actions+'</div>';
   }
   plan.querySelectorAll('.unit').forEach(function(u){
     u.setAttribute('tabindex','0');
     u.addEventListener('click',function(){render(u.dataset.id)});
     u.addEventListener('keypress',function(e){if(e.key==='Enter')render(u.dataset.id)});
   });
-  render('A1');
+  render('L1');
+})();
+
+/* Lightbox — full-screen viewer with a public API (window.LB) */
+(function(){
+  var lb=document.createElement('div'); lb.className='lightbox';
+  lb.innerHTML='<button class="lb-close" aria-label="Close">&times;</button><button class="lb-prev" aria-label="Previous">&#8249;</button><img alt="Photo"/><button class="lb-next" aria-label="Next">&#8250;</button><div class="lb-count"></div>';
+  document.body.appendChild(lb);
+  var lbImg=lb.querySelector('img'), count=lb.querySelector('.lb-count'), list=[], idx=0;
+  function show(i){ if(!list.length) return; idx=(i+list.length)%list.length; lbImg.src=list[idx]; count.textContent=(idx+1)+' / '+list.length; }
+  function open(srcs,i){ list=srcs; show(i||0); lb.classList.add('open'); document.body.style.overflow='hidden'; }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow=''; }
+  lb.querySelector('.lb-close').addEventListener('click',close);
+  lb.querySelector('.lb-prev').addEventListener('click',function(e){ e.stopPropagation(); show(idx-1); });
+  lb.querySelector('.lb-next').addEventListener('click',function(e){ e.stopPropagation(); show(idx+1); });
+  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft') show(idx-1);
+    if(e.key==='ArrowRight') show(idx+1);
+  });
+  window.LB={open:open};
+  // auto-bind static galleries (campaign graphics etc.)
+  var autos=Array.prototype.slice.call(document.querySelectorAll('.gal-grid img, .campaign-grid img'));
+  var srcs=autos.map(function(im){ return im.currentSrc||im.src; });
+  autos.forEach(function(im,i){ im.style.cursor='zoom-in'; im.addEventListener('click',function(){ open(srcs.slice(),i); }); });
+})();
+
+/* Hero slideshow — slow crossfade (homepage) */
+(function(){
+  var hero=document.getElementById('heroSlides'); if(!hero) return;
+  var slides=hero.querySelectorAll('.hero-media img.hs'); if(slides.length<2) return;
+  var i=0;
+  setInterval(function(){
+    slides[i].classList.remove('on');
+    i=(i+1)%slides.length;
+    slides[i].classList.add('on');
+  }, 6500);
+})();
+
+/* Flagship showcase — curated photo browser (residences) */
+(function(){
+  var sc=document.getElementById('showcase'); if(!sc) return;
+  var P=function(n){ return 'assets/img/property/photo-'+n+'.jpg'; };
+  var CATS=[
+    {key:'gallery', label:'The Gallery', ids:['00','05','06','35','36']},
+    {key:'living',  label:'The Living Level', ids:['07','08','09','10','12','13','14','16','17','18','20','21','22','24','26','28','30','33']},
+    {key:'exterior',label:'Exterior', ids:['01','02','03','04','37','38']},
+    {key:'all',     label:'All Photography', ids:null}
+  ];
+  CATS[3].ids=CATS[0].ids.concat(CATS[1].ids,CATS[2].ids);
+  var catsEl=document.getElementById('scCats'), thumbsEl=document.getElementById('scThumbs'),
+      mainEl=document.getElementById('scMain'), labelEl=document.getElementById('scLabel'), countEl=document.getElementById('scCount');
+  var cat=CATS[0], idx=0;
+  function srcAt(i){ return P(cat.ids[i]); }
+  function renderMain(){
+    mainEl.style.opacity=0;
+    setTimeout(function(){ mainEl.src=srcAt(idx); mainEl.onload=function(){ mainEl.style.opacity=1; }; },180);
+    labelEl.textContent=cat.label;
+    countEl.textContent=(idx+1)+' / '+cat.ids.length;
+    var ths=thumbsEl.querySelectorAll('img');
+    ths.forEach(function(t,j){ t.classList.toggle('on', j===idx); });
+    var on=ths[idx]; if(on&&on.scrollIntoView) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  }
+  function renderThumbs(){
+    thumbsEl.innerHTML='';
+    cat.ids.forEach(function(n,j){
+      var t=document.createElement('img');
+      t.src=P(n); t.loading='lazy'; t.alt='Photo '+(j+1);
+      t.addEventListener('click',function(){ idx=j; renderMain(); });
+      thumbsEl.appendChild(t);
+    });
+  }
+  function renderCats(){
+    catsEl.innerHTML='';
+    CATS.forEach(function(c){
+      var b=document.createElement('button');
+      b.textContent=c.label;
+      b.classList.toggle('on', c===cat);
+      b.addEventListener('click',function(){ cat=c; idx=0; renderCats(); renderThumbs(); renderMain(); });
+      catsEl.appendChild(b);
+    });
+  }
+  sc.querySelector('.sc-prev').addEventListener('click',function(){ idx=(idx-1+cat.ids.length)%cat.ids.length; renderMain(); });
+  sc.querySelector('.sc-next').addEventListener('click',function(){ idx=(idx+1)%cat.ids.length; renderMain(); });
+  sc.querySelector('.sc-expand').addEventListener('click',function(){ if(window.LB) LB.open(cat.ids.map(function(n){return P(n);}), idx); });
+  mainEl.addEventListener('click',function(){ if(window.LB) LB.open(cat.ids.map(function(n){return P(n);}), idx); });
+  mainEl.style.cursor='zoom-in';
+  renderCats(); renderThumbs(); renderMain();
+})();
+
+/* Supercar carousel — auto-advance, arrows, dots, swipe */
+(function(){
+  var car=document.getElementById('carCarousel'); if(!car) return;
+  var track=car.querySelector('.car-track'), slides=car.querySelectorAll('.car-slide'), dots=car.querySelector('.car-dots');
+  var n=slides.length, i=0, timer=null;
+  for(var d=0; d<n; d++){ var b=document.createElement('button'); b.setAttribute('aria-label','Slide '+(d+1)); (function(k){ b.addEventListener('click',function(){ go(k,true); }); })(d); dots.appendChild(b); }
+  var dotEls=dots.querySelectorAll('button');
+  function go(k,manual){
+    i=(k+n)%n;
+    track.style.transform='translateX(-'+(i*100)+'%)';
+    dotEls.forEach(function(el,j){ el.classList.toggle('on', j===i); });
+    if(manual) restart();
+  }
+  function next(){ go(i+1); }
+  function restart(){ if(timer) clearInterval(timer); timer=setInterval(next, 5000); }
+  car.querySelector('.car-prev').addEventListener('click',function(){ go(i-1,true); });
+  car.querySelector('.car-next').addEventListener('click',function(){ go(i+1,true); });
+  car.addEventListener('mouseenter',function(){ if(timer) clearInterval(timer); });
+  car.addEventListener('mouseleave',restart);
+  var x0=null;
+  car.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; },{passive:true});
+  car.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40) go(i+(dx<0?1:-1),true);
+    x0=null;
+  },{passive:true});
+  go(0); restart();
+})();
+
+/* Animated stat counters — numbers count up on reveal */
+(function(){
+  var stats=document.querySelectorAll('.stat .n');
+  if(!stats.length||!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting) return; io.unobserve(e.target);
+    var el=e.target, txt=el.textContent.trim(), m=txt.match(/^([\d,]+)$/);
+    if(!m) return;
+    var target=parseInt(m[1].replace(/,/g,''),10), t0=null;
+    function step(ts){
+      if(!t0) t0=ts;
+      var p=Math.min(1,(ts-t0)/1400); p=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*p).toLocaleString('en-US');
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })},{threshold:.6});
+  stats.forEach(function(s){io.observe(s)});
+})();
+
+/* Subtle hero parallax (subpages; homepage keeps its slow zoom) */
+(function(){
+  var hero=document.querySelector('.hero:not(.kenburns) .hero-media img');
+  if(!hero) return;
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY;
+      if(y<window.innerHeight) hero.style.transform='translateY('+(y*0.16)+'px) scale(1.06)';
+      ticking=false;
+    });
+  },{passive:true});
 })();
