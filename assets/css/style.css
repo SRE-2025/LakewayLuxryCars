@@ -13,7 +13,7 @@
   --sans:'Jost',system-ui,-apple-system,sans-serif;
   --serif:'Cinzel',Georgia,serif;
   --ease:cubic-bezier(.19,1,.22,1);
-  --nav-h:88px;
+  --nav-h:120px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
