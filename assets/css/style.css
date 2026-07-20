@@ -10,8 +10,8 @@
   --gold-light:#e2c987; /* legacy token */
   --line:rgba(201,162,75,.28); --line-soft:rgba(255,255,255,.09);
   --near-black:#111; /* legacy token used by inline styles */
-  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
-  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,-apple-system,sans-serif;
+  --serif:'Cinzel',Georgia,serif;
   --ease:cubic-bezier(.19,1,.22,1);
   --nav-h:122px;
 }
@@ -27,7 +27,7 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-weight:600;line-height:1.12}
 .serif{font-family:var(--sans)}
 .gold{color:var(--champagne)}
-.section-title{font-family:var(--serif);font-size:clamp(32px,3.8vw,54px);font-weight:500;letter-spacing:.01em;text-transform:none;color:var(--ink);line-height:1.12}
+.section-title{font-family:var(--serif);font-size:clamp(24px,2.9vw,42px);font-weight:600;letter-spacing:.02em;text-transform:none;color:var(--ink);line-height:1.2}
 .section-title::after{content:'';display:block;width:74px;height:3px;background:var(--champagne);margin-top:20px}
 .center .section-title::after,.cta-band .section-title::after{margin-left:auto;margin-right:auto}
 .lede{color:var(--muted);font-size:clamp(15px,1.3vw,17px);font-weight:300;max-width:56ch}
@@ -98,8 +98,8 @@ body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2
 .hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,6,6,.86) 0%,rgba(6,6,6,.32) 44%,rgba(6,6,6,.42) 100%)}
 .hero-inner{position:relative;z-index:2;max-width:880px}
 .hero .eyebrow{color:var(--champagne)}
-.hero h1{font-family:var(--serif);font-size:clamp(42px,5.8vw,84px);font-weight:500;letter-spacing:.01em;text-transform:none;line-height:1.06;margin:14px 0 24px;color:#fff}
-.hero h1 em{font-style:italic;color:var(--champagne)}
+.hero h1{font-family:var(--serif);font-size:clamp(32px,4.4vw,62px);font-weight:600;letter-spacing:.02em;text-transform:none;line-height:1.14;margin:14px 0 24px;color:#fff}
+.hero h1 em{font-style:normal;color:var(--champagne)}
 .hero p{font-size:clamp(15px,1.35vw,18px);color:#e6e1d8;max-width:58ch;margin-bottom:34px}
 .hero-actions{display:flex;gap:16px;flex-wrap:wrap}
 
@@ -112,8 +112,8 @@ body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2
 .panel:hover .bg::after{background:rgba(6,6,6,.62)}
 .panel .inner{position:relative;z-index:2;padding:0 24px}
 .panel .tag{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--champagne);margin-bottom:18px;font-weight:500}
-.panel .word{font-family:var(--sans);font-weight:800;font-size:clamp(44px,8.5vw,118px);line-height:.98;letter-spacing:.06em;text-transform:uppercase;color:#fff}
-.panel .word .thin{font-weight:300}
+.panel .word{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,98px);line-height:1.04;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+.panel .word .thin{font-weight:400}
 .panel .go{display:inline-block;margin-top:30px;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:#fff;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--champagne);transition:color .3s,letter-spacing .4s}
 .panel:hover .go{color:var(--champagne);letter-spacing:.5em}
 
@@ -239,9 +239,12 @@ form{display:grid;gap:22px}
 .campaign-grid figure:hover{transform:translateY(-8px);border-color:rgba(222,190,143,.45)}
 .campaign-grid img{width:100%;height:auto;display:block;aspect-ratio:4/5;object-fit:cover}
 
-/* brand watermark on imagery (Reserve-style) */
-.split-media::after,.model-media::after,.showcase-main::after,.car-slide::after{content:'';position:absolute;right:16px;bottom:16px;width:34px;height:34px;background:url('../img/logo-L.png') center/contain no-repeat;opacity:.6;z-index:2;pointer-events:none;filter:drop-shadow(0 2px 8px rgba(0,0,0,.8))}
-.car-slide::after{bottom:20px}
+/* LX-style editorial intro */
+.edit-intro{padding:88px 0;border-bottom:1px solid var(--line-soft);background:var(--bg-alt)}
+.ei-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1160px}
+.ei-line{font-family:var(--serif);font-weight:600;font-size:clamp(24px,2.6vw,38px);line-height:1.25;color:var(--ink)}
+.ei-copy{color:var(--muted);font-size:18px;line-height:1.9;max-width:52ch;padding-top:34px}
+@media(max-width:860px){.ei-grid{grid-template-columns:1fr;gap:20px}.ei-copy{padding-top:0}}
 
 /* Concours-style gold line-icon strip */
 .icostrip{background:var(--bg-alt);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:54px 0}
@@ -379,7 +382,7 @@ body.entered .hero-media img{transform:scale(1)}
 
 /* ===== STATEMENT (Protect. Showcase. Enjoy.) ===== */
 .statement{padding:150px 0 140px;background:#050505;border-top:1px solid rgba(222,190,143,.14)}
-.st-line{font-family:var(--sans);font-weight:800;font-size:clamp(52px,8.5vw,124px);line-height:1.04;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+.st-line{font-family:var(--serif);font-weight:700;font-size:clamp(42px,7vw,104px);line-height:1.08;letter-spacing:.04em;text-transform:uppercase;color:#fff}
 .st-line.st-outline{color:var(--champagne)}
 .st-line.reveal{transform:translateY(46px)}
 .statement .st-line.reveal:nth-child(2){transition-delay:.18s}
