@@ -13,7 +13,7 @@
   --sans:'Montserrat',system-ui,-apple-system,sans-serif;
   --serif:'Cormorant Garamond',Georgia,serif;
   --ease:cubic-bezier(.19,1,.22,1);
-  --nav-h:134px;
+  --nav-h:196px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -51,26 +51,23 @@ header.scrolled{box-shadow:0 10px 34px rgba(0,0,0,.5)}
 .topbar{border-bottom:1px solid rgba(222,190,143,.13);overflow:hidden;max-height:40px;transition:max-height .45s var(--ease),opacity .3s}
 header.scrolled .topbar{max-height:0;opacity:0}
 .topbar .tb{display:flex;justify-content:space-between;align-items:center;padding-top:9px;padding-bottom:9px;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:#8a8478}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;transition:padding .4s var(--ease)}
-header.scrolled .nav{padding:7px 0}
+.masthead{display:flex;align-items:center;justify-content:center;position:relative;padding:16px 0 10px;transition:padding .4s var(--ease)}
+header.scrolled .masthead{padding:8px 0 4px}
 .brand{display:flex;align-items:center}
-.brand img{width:auto;transition:height .4s var(--ease)}
-.brand-center{margin:0 42px;flex:none}
-.brand-center img{height:76px;filter:drop-shadow(0 4px 18px rgba(0,0,0,.55))}
-header.scrolled .brand-center img{height:56px}
-.brand-mobile{display:none}
-.brand-mobile img{height:44px}
+.brand img{width:auto;height:86px;transition:height .4s var(--ease);filter:drop-shadow(0 4px 18px rgba(0,0,0,.55))}
+header.scrolled .brand img{height:54px}
 .brand-text{display:none}
-.nav-links{display:flex;align-items:center;width:100%}
-.ng{flex:1;display:flex;align-items:center;gap:30px}
-.ng-l{justify-content:flex-end}
-.ng-r{justify-content:flex-start}
+.tb-link{color:var(--champagne);transition:color .3s;border-bottom:1px solid rgba(222,190,143,.35);padding-bottom:2px}
+.tb-link:hover{color:#fff;border-color:#fff}
+.navrow{transition:padding .4s var(--ease)}
+.nav-links{display:flex;align-items:center;justify-content:center;gap:34px;padding:2px 0 16px}
+header.scrolled .nav-links{padding:0 0 10px}
 .nav-links a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);font-weight:500;position:relative;padding:4px 0;transition:color .3s}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--champagne);transition:width .4s var(--ease)}
 .nav-links a:hover,.nav-links a.active{color:#fff}
 .nav-links a.active::after,.nav-links a:hover::after{width:100%}
-.nav-cta{background:var(--champagne);border:1px solid var(--champagne);color:#111!important;font-weight:700;padding:13px 28px;letter-spacing:.22em;box-shadow:0 6px 24px rgba(222,190,143,.22)}
-.nav-cta:hover{background:var(--crimson);border-color:var(--crimson);color:#fff!important;box-shadow:0 6px 26px rgba(163,22,33,.35)}
+.nav-cta{border:1px solid rgba(222,190,143,.55);color:var(--champagne)!important;padding:10px 26px;letter-spacing:.24em;font-weight:600;transition:all .35s var(--ease)}
+.nav-cta:hover{background:var(--champagne);border-color:var(--champagne);color:#111!important}
 .nav-cta::after{display:none}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;z-index:120}
 .hamburger span{width:26px;height:2px;background:#fff;transition:.3s}
@@ -398,9 +395,11 @@ footer{background:#0a0a0a;border-top:1px solid rgba(222,190,143,.22);padding:74p
 }
 @media(max-width:860px){
   .topbar{display:none}
-  .brand-mobile{display:flex}
-  .brand-mobile img{height:42px}
-  .nav-links .brand-center{display:none}
+  .masthead{justify-content:flex-start;padding:10px 0}
+  .brand img{height:46px}
+  header.scrolled .brand img{height:40px}
+  .hamburger{position:absolute;right:20px;top:50%;transform:translateY(-50%)}
+  .navrow{padding:0}
   .campaign-grid{grid-template-columns:1fr}
   .nav-links{position:fixed;inset:0;background:rgba(8,8,8,.99);flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .5s var(--ease)}
   .nav-links.open{transform:none}
