@@ -241,6 +241,48 @@ form{display:grid;gap:22px}
 
 /* homepage connect */
 .connect{background:var(--bg-alt);border-top:1px solid var(--line-soft);padding:110px 0}
+
+/* ===== LIGHT + GOLD SECTION VARIANTS ===== */
+.sec-light{background:#eae7e1!important;border-top:1px solid rgba(0,0,0,.06)!important;color:#221f1c}
+.sec-light .section-title,.sec-light h3,.sec-light .ei-line{color:#221f1c}
+.sec-light p,.sec-light .lede{color:#5d5850}
+.sec-light .eyebrow{color:var(--gold-deep)}
+.sec-light .card{background:#fff;border-color:rgba(0,0,0,.07);border-top-color:var(--gold);box-shadow:0 14px 40px rgba(0,0,0,.08)}
+.sec-light .card:hover{box-shadow:0 24px 60px rgba(0,0,0,.14);border-top-color:var(--crimson)}
+.sec-light .card p{color:#6d685f}
+.sec-light .btn{border-color:var(--gold-deep);color:var(--gold-deep)}
+.sec-light .btn:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:#fff}
+.sec-light .star-rule::before{background:linear-gradient(90deg,transparent,var(--gold-deep))}
+.sec-light .star-rule::after{background:linear-gradient(90deg,var(--gold-deep),transparent)}
+.sec-light .car-dots button{border-color:var(--gold-deep)}
+.sec-light .car-dots button.on{background:var(--gold-deep)}
+
+.sec-gold{background:linear-gradient(170deg,#dcbd8a,#c8a76e)!important;border-top:none!important;color:#241e14}
+.sec-gold .section-title{color:#241e14}
+.sec-gold .section-title::after{background:#241e14}
+.sec-gold p,.sec-gold .lede{color:#4d4130}
+.sec-gold .eyebrow{color:#7c5e24}
+.sec-gold .contact-line .k{color:#7c5e24}
+.sec-gold .contact-line .v{color:#241e14}
+.sec-gold .form-panel{background:#fbf8f2;border:none;border-top:3px solid #241e14;box-shadow:0 30px 80px rgba(60,45,20,.35)}
+.sec-gold .field label{color:#7c6a48}
+.sec-gold .field input,.sec-gold .field select,.sec-gold .field textarea{color:#241e14;border-bottom-color:rgba(36,30,20,.3)}
+.sec-gold .field input:focus,.sec-gold .field select:focus,.sec-gold .field textarea:focus{border-color:#7c5e24}
+.sec-gold .field select option{background:#fbf8f2;color:#241e14}
+.sec-gold .btn-solid{background:#241e14;border-color:#241e14;color:#e8d9ba}
+.sec-gold .btn-solid:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.sec-gold .form-note{color:#6d5c3c}
+
+/* icon strips go champagne */
+.icostrip{background:linear-gradient(170deg,#dcbd8a,#c8a76e);border-top:none;border-bottom:none}
+.ico{color:#7c5e24;border-right-color:rgba(36,30,20,.18)}
+.ico span{color:#241e14}
+
+/* editorial intros go light */
+.edit-intro{background:#eae7e1;border-bottom:1px solid rgba(0,0,0,.06)}
+.edit-intro .ei-line{color:#221f1c}
+.edit-intro .ei-copy{color:#5d5850}
+.edit-intro .eyebrow{color:var(--gold-deep)}
 .contact-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1000px;margin:0 auto;text-align:center}
 .contact-strip>div{border:1px solid var(--line-soft);border-top:2px solid var(--champagne);padding:28px 18px;background:linear-gradient(170deg,#282521,#1d1b1a)}
 .contact-strip .k{display:block;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:8px;font-weight:600}
