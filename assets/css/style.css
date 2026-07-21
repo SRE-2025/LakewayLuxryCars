@@ -96,13 +96,13 @@ header.scrolled .nb-mark img{height:36px}
 .hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:center;overflow:hidden;padding-top:var(--nav-h)}
 .hero.short{height:auto;min-height:0;padding:calc(var(--nav-h) + 110px) 0 100px}
 .hero-media{position:absolute;inset:0}
-.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:brightness(1.28) contrast(1.02)}
 /* hero slideshow (homepage) */
 .hero-media img.hs{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease)}
 .hero-media img.hs.on{opacity:1}
 body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2.5s infinite alternate}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.09) translate(-1.2%,-1%)}}
-.hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,19,17,.62) 0%,rgba(20,19,17,.2) 44%,rgba(20,19,17,.3) 100%)}
+.hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,19,17,.42) 0%,rgba(20,19,17,.1) 44%,rgba(20,19,17,.16) 100%)}
 .hero-inner{position:relative;z-index:2;max-width:880px}
 .hero .eyebrow{color:var(--champagne)}
 .hero h1{font-family:var(--serif);font-size:clamp(32px,4.4vw,62px);font-weight:600;letter-spacing:.02em;text-transform:none;line-height:1.14;margin:14px 0 24px;color:#fff}
@@ -177,8 +177,8 @@ a.word:hover{color:#fff}
 /* CTA band */
 .cta-band{position:relative;padding:130px 0;text-align:center;overflow:hidden}
 .cta-band .bg{position:absolute;inset:0}
-.cta-band .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.cta-band .bg::after{content:'';position:absolute;inset:0;background:rgba(24,22,20,.68)}
+.cta-band .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(1.22)}
+.cta-band .bg::after{content:'';position:absolute;inset:0;background:rgba(24,22,20,.52)}
 .cta-band .inner{position:relative;z-index:2;max-width:760px;margin:0 auto}
 .cta-band h2{font-weight:700;font-size:clamp(26px,3.6vw,46px);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 20px;color:#fff}
 .cta-band h2 .gold{color:var(--champagne)}
