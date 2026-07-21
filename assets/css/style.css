@@ -115,10 +115,14 @@ body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2
 .panel .bg{position:absolute;inset:0}
 .panel .bg img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease)}
 .panel:hover .bg img{transform:scale(1.05)}
-.panel .bg::after{content:'';position:absolute;inset:0;background:rgba(6,6,6,.5);transition:background .6s}
-.panel:hover .bg::after{background:rgba(6,6,6,.12)!important}
-.panel .bg img{filter:brightness(1);transition:filter .6s var(--ease),transform 1.6s var(--ease)}
-.panel:hover .bg img{filter:brightness(1.18)}
+.panel .bg::after{content:'';position:absolute;inset:0;background:rgba(6,6,6,.14);transition:background .6s}
+.panel:hover .bg::after{background:rgba(6,6,6,0)!important}
+.panel .bg img{filter:brightness(1.15);transition:filter .6s var(--ease),transform 1.6s var(--ease)}
+.panel:hover .bg img{filter:brightness(1.3)}
+.panel .tag,.panel .go{text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.panel .word{text-shadow:0 3px 30px rgba(0,0,0,.65)}
+.panel.in .word{transition:transform .5s var(--ease)}
+.panel.in:hover .word{transform:scale(1.07)}
 .panel .inner{position:relative;z-index:2;padding:0 24px}
 .panel .tag{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--champagne);margin-bottom:18px;font-weight:500}
 .panel .word{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,98px);line-height:1.04;letter-spacing:.05em;text-transform:uppercase;color:#fff}
