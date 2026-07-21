@@ -260,8 +260,6 @@ form{display:grid;gap:22px}
 .sec-light .btn:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:#fff}
 .sec-light .star-rule::before{background:linear-gradient(90deg,transparent,var(--gold-deep))}
 .sec-light .star-rule::after{background:linear-gradient(90deg,var(--gold-deep),transparent)}
-.sec-light .car-dots button{border-color:var(--gold-deep)}
-.sec-light .car-dots button.on{background:var(--gold-deep)}
 
 .sec-gold{background:linear-gradient(170deg,#dcbd8a,#c8a76e)!important;border-top:none!important;color:#241e14}
 .sec-gold .section-title{color:#241e14}
@@ -300,8 +298,6 @@ form{display:grid;gap:22px}
 .sec-light .btn-solid{background:#241e14;border-color:#241e14;color:#e8d9ba}
 .sec-light .btn-solid:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
 
-.sec-light .car-prev,.sec-light .car-next{background:rgba(20,19,17,.85);border-color:var(--champagne)}
-.sec-light .car-prev:hover,.sec-light .car-next:hover{background:var(--champagne)}
 
 /* icon strips go champagne */
 .icostrip{background:linear-gradient(170deg,#dcbd8a,#c8a76e)!important;border-top:none!important;border-bottom:none!important}
@@ -363,17 +359,19 @@ form{display:grid;gap:22px}
 .showcase-thumbs img.on{opacity:1;border-color:var(--champagne)}
 
 /* ===== SUPERCAR CAROUSEL ===== */
-.carousel{position:relative;overflow:hidden}
-.car-track{display:flex;transition:transform .75s var(--ease)}
-.car-slide{min-width:100%;margin:0;position:relative;background:#1e1c1a}
-.car-slide img{width:100%;height:clamp(420px,68vh,640px);object-fit:contain}
-.car-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:70px 48px 30px;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--champagne);font-weight:600;background:linear-gradient(0deg,rgba(22,21,19,.72),transparent);text-align:left}
-.car-prev,.car-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(30,28,26,.6);border:1px solid rgba(222,190,143,.4);color:var(--champagne);width:54px;height:54px;border-radius:50%;font-size:30px;line-height:1;cursor:pointer;transition:all .3s;z-index:3;display:flex;align-items:center;justify-content:center;padding-bottom:4px}
-.car-prev{left:22px}.car-next{right:22px}
-.car-prev:hover,.car-next:hover{background:var(--champagne);color:#111;border-color:var(--champagne)}
-.car-dots{position:absolute;bottom:26px;right:44px;display:flex;gap:10px;z-index:3}
-.car-dots button{width:9px;height:9px;border-radius:50%;border:1px solid var(--champagne);background:transparent;cursor:pointer;padding:0;transition:background .3s,transform .3s}
-.car-dots button.on{background:var(--champagne);transform:scale(1.25)}
+.carousel{position:relative;overflow:hidden;max-width:1180px;margin:0 auto}
+.car-track{display:flex;transition:transform .8s var(--ease)}
+.car-slide{min-width:100%;margin:0;position:relative;background:#141311}
+.car-slide img{width:100%;height:clamp(440px,58vh,600px);object-fit:cover;object-position:center}
+.car-slide::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,11,9,.72) 0%,rgba(12,11,9,.05) 34%,transparent 55%);pointer-events:none;z-index:1}
+.car-slide figcaption{position:absolute;left:0;bottom:0;padding:0 0 30px 40px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#fff;font-weight:500;text-align:left;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.car-prev,.car-next{position:absolute;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#fff;width:52px;height:52px;font-size:40px;font-weight:200;line-height:1;cursor:pointer;transition:opacity .3s,transform .3s;z-index:3;display:flex;align-items:center;justify-content:center;padding-bottom:6px;opacity:.72;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+.car-prev{left:14px}.car-next{right:14px}
+.car-prev:hover{opacity:1;transform:translateY(-50%) translateX(-3px)}
+.car-next:hover{opacity:1;transform:translateY(-50%) translateX(3px)}
+.car-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:11px;z-index:3}
+.car-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0;transition:background .3s,transform .3s}
+.car-dots button.on{background:#fff;transform:scale(1.4)}
 
 /* ===== ESTATE SITE PLAN ===== */
 .plan-svg.estate .lot{fill:rgba(222,190,143,.05);stroke:rgba(222,190,143,.5);stroke-width:1.2;transition:fill .3s,stroke .3s}
@@ -582,11 +580,11 @@ body.entered .hero-media img{transform:scale(1)}
   .icostrip{padding:34px 0}
   .ico svg{width:34px;height:34px}
   .ico span{font-size:9px;letter-spacing:.18em}
-  .car-slide img{height:280px}
-  .car-slide figcaption{padding:40px 18px 16px;font-size:9.5px;letter-spacing:.2em}
-  .car-prev,.car-next{width:40px;height:40px;font-size:22px}
-  .car-prev{left:10px}.car-next{right:10px}
-  .car-dots{bottom:12px;right:16px;gap:7px}
+  .car-slide img{height:300px}
+  .car-slide figcaption{padding:0 0 22px 20px;font-size:10px;letter-spacing:.22em}
+  .car-prev,.car-next{width:40px;height:40px;font-size:32px}
+  .car-prev{left:4px}.car-next{right:4px}
+  .car-dots{bottom:16px;gap:8px}
   .showcase-main img{height:300px}
   .sc-prev,.sc-next{width:38px;height:38px;font-size:20px}
   .sc-prev{left:10px}.sc-next{right:10px}
