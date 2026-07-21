@@ -391,6 +391,7 @@ body.entered .hero-media img{transform:scale(1)}
 .statement{padding:150px 0 140px;background:#050505;border-top:1px solid rgba(222,190,143,.14)}
 .st-line{font-family:var(--serif);font-weight:700;font-size:clamp(42px,7vw,104px);line-height:1.08;letter-spacing:.04em;text-transform:uppercase;color:#fff}
 .st-line.st-outline{color:var(--champagne)}
+.statement .lede{margin-top:84px!important}
 .st-line.reveal{transform:translateY(46px)}
 .statement .st-line.reveal:nth-child(2){transition-delay:.18s}
 .statement .st-line.reveal:nth-child(3){transition-delay:.36s}
