@@ -359,19 +359,19 @@ form{display:grid;gap:22px}
 .showcase-thumbs img.on{opacity:1;border-color:var(--champagne)}
 
 /* ===== SUPERCAR CAROUSEL ===== */
-.carousel{position:relative;overflow:hidden;max-width:1180px;margin:0 auto}
+.carousel{position:relative;overflow:hidden;max-width:1040px;margin:0 auto}
 .car-track{display:flex;transition:transform .8s var(--ease)}
-.car-slide{min-width:100%;margin:0;position:relative;background:#141311}
-.car-slide img{width:100%;height:clamp(440px,58vh,600px);object-fit:cover;object-position:center}
-.car-slide::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,11,9,.72) 0%,rgba(12,11,9,.05) 34%,transparent 55%);pointer-events:none;z-index:1}
-.car-slide figcaption{position:absolute;left:0;bottom:0;padding:0 0 30px 40px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#fff;font-weight:500;text-align:left;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.7)}
-.car-prev,.car-next{position:absolute;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#fff;width:52px;height:52px;font-size:40px;font-weight:200;line-height:1;cursor:pointer;transition:opacity .3s,transform .3s;z-index:3;display:flex;align-items:center;justify-content:center;padding-bottom:6px;opacity:.72;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+.car-slide{min-width:100%;margin:0;position:relative;background:#eae7e1}
+.car-slide img{width:100%;height:clamp(400px,52vh,540px);object-fit:contain;object-position:center}
+
+.car-slide figcaption{position:absolute;left:18px;bottom:18px;padding:9px 18px;background:rgba(22,19,15,.82);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);font-weight:600;text-align:left;z-index:2}
+.car-prev,.car-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.66);border:1px solid rgba(0,0,0,.12);color:#241e14;width:46px;height:46px;border-radius:50%;font-size:26px;font-weight:300;line-height:1;cursor:pointer;transition:all .3s;z-index:3;display:flex;align-items:center;justify-content:center;padding-bottom:3px}
 .car-prev{left:14px}.car-next{right:14px}
-.car-prev:hover{opacity:1;transform:translateY(-50%) translateX(-3px)}
-.car-next:hover{opacity:1;transform:translateY(-50%) translateX(3px)}
+.car-prev:hover{background:#241e14;color:#fff}
+.car-next:hover{background:#241e14;color:#fff}
 .car-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:11px;z-index:3}
-.car-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0;transition:background .3s,transform .3s}
-.car-dots button.on{background:#fff;transform:scale(1.4)}
+.car-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(36,30,20,.32);cursor:pointer;padding:0;transition:background .3s,transform .3s}
+.car-dots button.on{background:#241e14;transform:scale(1.4)}
 
 /* ===== ESTATE SITE PLAN ===== */
 .plan-svg.estate .lot{fill:rgba(222,190,143,.05);stroke:rgba(222,190,143,.5);stroke-width:1.2;transition:fill .3s,stroke .3s}
