@@ -608,17 +608,6 @@ body.entered .hero-media img{transform:scale(1)}
 .hero h1 em{color:var(--champagne)}
 .cta-band h2 .gold{color:var(--champagne)}
 /* header */
-.topbar{background:#f2f0ec}
-.topbar .tb{color:#7a746a}
-.tb-link{color:#6a5120;border-color:rgba(0,0,0,.22)}
-.tb-link:hover{color:#1c1a17;border-color:#1c1a17}
-header.scrolled{background:#fff;box-shadow:0 8px 26px rgba(0,0,0,.1)}
-header.scrolled .nav-links a{color:#8a6a24;text-shadow:none}
-header.scrolled .nav-links a:hover,header.scrolled .nav-links a.active{color:#1c1a17}
-header.scrolled .nav-links a.nav-cta{color:#8a6a24!important;border-color:#8a6a24;background:transparent;text-shadow:none}
-header.scrolled .nav-links a.nav-cta:hover{background:var(--gold-deep);color:#fff!important}
-header.scrolled .hamburger span{background:#1c1a17}
-header.scrolled .nb-mark img{filter:none}
 /* cards / panels / forms */
 .card{background:#fff;border:1px solid rgba(0,0,0,.08);border-top:2px solid var(--gold);box-shadow:0 12px 34px rgba(0,0,0,.07)}
 .card:hover{box-shadow:0 22px 56px rgba(0,0,0,.12)}
@@ -637,9 +626,6 @@ header.scrolled .nb-mark img{filter:none}
 .showcase-cats button{border-color:rgba(0,0,0,.12);color:#6b665d}
 .showcase-thumbs img{border-color:transparent}
 /* dropdowns */
-.drop{background:#fff;border:1px solid rgba(0,0,0,.1);box-shadow:0 18px 46px rgba(0,0,0,.14)}
-.drop a{color:#1c1a17!important}
-.drop a:hover{background:#f2f0ec;color:var(--gold-deep)!important}
 /* footer */
 footer{background:#f2f0ec;border-top:1px solid rgba(0,0,0,.08)}
 .foot-top{border-bottom-color:rgba(0,0,0,.1)}
@@ -656,11 +642,6 @@ footer{background:#f2f0ec;border-top:1px solid rgba(0,0,0,.08)}
 .star-rule::after{background:linear-gradient(90deg,var(--gold),transparent)}
 /* mobile menu light */
 @media(max-width:860px){
-  .nav-links{background:rgba(255,255,255,.99)!important}
-  .nav-links a{color:var(--gold-deep)}
-  .nav-links a.nav-cta{color:var(--gold-deep)!important;border-color:var(--gold-deep)}
-  .drop a{color:#6b665d!important}
-  .hamburger span{background:#1c1a17}
 }
 /* PROTECT/SHOWCASE/ENJOY statement stays dark — untouched by design */
 
@@ -674,3 +655,8 @@ footer{background:#f2f0ec;border-top:1px solid rgba(0,0,0,.08)}
 .sec-gold .btn,.sec-gold .btn-solid{border-color:#241e14}
 .sec-gold .btn:not(.btn-solid){color:#241e14}
 .sec-gold .btn:hover{background:#241e14;color:#e8d9ba}
+
+/* full logo lockup in header center (needs dark chrome) */
+.nb-full img{height:62px;filter:drop-shadow(0 3px 14px rgba(0,0,0,.7))}
+header.scrolled .nb-full img{height:48px}
+@media(max-width:860px){ .nb-full{display:none} }
