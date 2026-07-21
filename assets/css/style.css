@@ -125,7 +125,8 @@ body.entered .hero.kenburns .hero-media img{animation:kenburns 26s ease-in-out 2
 .panel.in:hover .word{transform:scale(1.07)}
 .panel .inner{position:relative;z-index:2;padding:0 24px}
 .panel .tag{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--champagne);margin-bottom:18px;font-weight:500}
-.panel .word{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,98px);line-height:1.04;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+.panel .word{display:block;cursor:pointer;font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,98px);line-height:1.04;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+a.word:hover{color:#fff}
 .panel .word .thin{font-weight:400}
 .panel .go{display:inline-block;margin-top:30px;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:#fff;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--champagne);transition:color .3s,letter-spacing .4s}
 .panel:hover .go{color:var(--champagne);letter-spacing:.5em}
