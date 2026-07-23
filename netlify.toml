@@ -1,0 +1,12 @@
+# Netlify config — serves the static site as-is and exposes the lead function
+# at a clean, same-origin path so no third-party name appears in the page source.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Pretty endpoint: the site posts to /api/lead
+[[redirects]]
+  from = "/api/lead"
+  to = "/.netlify/functions/lead"
+  status = 200
