@@ -535,7 +535,9 @@ body.entered .hero-media img{transform:scale(1)}
   .navbar{justify-content:space-between}
   .nav-links .nb-mark{display:none}
   .campaign-grid{grid-template-columns:1fr}
-  .nav-links{position:fixed;inset:0;background:rgba(30,28,26,.99);flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .5s var(--ease)}
+  .nav-links{position:fixed;inset:0;z-index:110;background:#16120e;flex-direction:column;transform:translateX(100%);transition:transform .5s var(--ease)}
+  .nav-links.nb-spread{justify-content:center;gap:20px}
+  .nav-links .has-drop>a{margin-bottom:2px}
   .nav-links.open{transform:none}
   .nav-links a{font-size:14px}
   .hamburger{display:flex}
