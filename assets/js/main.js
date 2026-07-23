@@ -62,14 +62,41 @@
     q.addEventListener('click',function(){q.parentElement.classList.toggle('open')});
   });
 
-  // Contact form + suite prefill
+  // Contact / showings form -> delivers every lead by email (FormSubmit, no backend needed)
   var form=document.getElementById('contactForm');
   if(form){
+    var LEAD_EMAIL='lakewayluxurycarsuites@gmail.com';
     var q=new URLSearchParams(location.search).get('unit')||new URLSearchParams(location.search).get('model');
     if(q){var msg=form.querySelector('#msg');if(msg)msg.value="I'm interested in "+q+". Please send availability, pricing, and a private tour.";}
     form.addEventListener('submit',function(e){e.preventDefault();
-      var n=document.getElementById('formNote');if(n){n.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';n.style.color='var(--gold-light)';}
-      var b=form.querySelector('button[type=submit]');if(b){b.textContent='Submitted ✓';b.disabled=true;}
+      var g=function(id){var el=document.getElementById(id);return el?(''+el.value).trim():'';};
+      var note=document.getElementById('formNote');
+      var btn=form.querySelector('button[type=submit]');
+      var first=g('fn'),last=g('ln'),email=g('em');
+      if(!first||!last||!email){if(note){note.textContent='Please add your name and email so we can reach you.';note.style.color='#b3402e';}return;}
+      var payload={
+        Name:(first+' '+last).replace(/\s+/g,' ').trim(),
+        Email:email, Phone:g('ph'), Inquiry:g('ty'),
+        Preferred_Date:g('dt'), Preferred_Time:g('tm'), Message:g('msg'),
+        Source_Page:(document.title||'')+' — '+location.href,
+        _subject:'New lead — '+(document.title||'Lakeway Luxury Car Suites'),
+        _template:'table'
+      };
+      Object.keys(payload).forEach(function(k){if(payload[k]==='')delete payload[k];});
+      if(btn){btn.textContent='Sending…';btn.disabled=true;}
+      fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(payload)})
+      .then(function(r){return r.json();})
+      .then(function(){
+        if(note){note.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';note.style.color='#1c1a17';}
+        if(btn){btn.textContent='Submitted ✓';}
+        form.reset();
+      })
+      .catch(function(){
+        if(note){note.innerHTML='We couldn’t send that automatically. Please email us directly at <a href="mailto:'+LEAD_EMAIL+'" style="border-bottom:1px solid currentColor">'+LEAD_EMAIL+'</a>.';note.style.color='#b3402e';}
+        if(btn){btn.textContent='Try Again';btn.disabled=false;}
+      });
     });
   }
 })();
