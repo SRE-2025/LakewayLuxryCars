@@ -282,3 +282,20 @@
     });
   },{passive:true});
 })();
+
+/* Instagram feed — replace the curated grid with live posts when available */
+(function(){
+  var grid=document.querySelector('.ig-grid');
+  if(!grid||!window.fetch) return;
+  fetch('assets/data/instagram.json',{cache:'no-cache'})
+    .then(function(r){return r.ok?r.json():[];})
+    .then(function(posts){
+      if(!posts||!posts.length) return; // no feed yet -> keep curated fallback
+      var glyph='<span class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg></span>';
+      grid.innerHTML=posts.map(function(p){
+        var alt=(p.caption||'Instagram post').replace(/"/g,'&quot;');
+        return '<a class="ig-cell" href="'+p.permalink+'" target="_blank" rel="noopener"><img src="'+p.img+'" alt="'+alt+'" loading="lazy"/>'+glyph+'</a>';
+      }).join('');
+    })
+    .catch(function(){});
+})();
