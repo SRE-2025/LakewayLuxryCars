@@ -664,6 +664,20 @@ footer{background:#f2f0ec;border-top:1px solid rgba(0,0,0,.08)}
 header.scrolled .nb-full img{height:48px}
 @media(max-width:860px){ .nb-full{display:none} }
 
+/* ===== INSTAGRAM FEED SECTION ===== */
+.ig-handle{display:inline-block;margin-top:16px;font-family:var(--sans);letter-spacing:.16em;text-transform:uppercase;font-size:12px;font-weight:600;color:#8a6a24;transition:color .3s}
+.ig-handle:hover{color:#5f4713}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1080px;margin:0 auto}
+.ig-cell{position:relative;aspect-ratio:1/1;overflow:hidden;display:block;background:#eae7e1}
+.ig-cell img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.ig-cell:hover img{transform:scale(1.07)}
+.ig-cell::after{content:'';position:absolute;inset:0;background:rgba(18,14,10,0);transition:background .4s}
+.ig-cell:hover::after{background:rgba(18,14,10,.4)}
+.ig-cell .ig-ico{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.75);opacity:0;transition:opacity .4s,transform .4s;color:#fff;z-index:2;pointer-events:none}
+.ig-cell .ig-ico svg{width:38px;height:38px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.ig-cell:hover .ig-ico{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media(max-width:860px){.ig-grid{grid-template-columns:1fr 1fr;gap:8px}}
+
 /* ===== MOBILE CENTERING & POLISH ===== */
 @media(max-width:860px){
   /* Hero — center text; symmetric scrim so centered copy reads over any video frame */
