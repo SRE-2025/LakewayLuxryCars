@@ -678,6 +678,11 @@ header.scrolled .nb-full img{height:48px}
 .ig-cell:hover .ig-ico{opacity:1;transform:translate(-50%,-50%) scale(1)}
 @media(max-width:860px){.ig-grid{grid-template-columns:1fr 1fr;gap:8px}}
 
+/* ===== FACEBOOK FEED SECTION ===== */
+.fb-embed{display:flex;justify-content:center}
+.fb-embed iframe{max-width:100%;width:500px;height:640px;background:#fff;border-radius:10px;box-shadow:0 14px 40px rgba(0,0,0,.09)}
+@media(max-width:860px){.fb-embed iframe{height:560px}}
+
 /* ===== MOBILE CENTERING & POLISH ===== */
 @media(max-width:860px){
   /* Hero — center text; symmetric scrim so centered copy reads over any video frame */
