@@ -1,19 +1,22 @@
-// Pulls the latest Instagram posts via the official Instagram Graph API and
-// writes them into the site (downloaded images + a JSON manifest) so the
-// homepage feed auto-updates. Designed to run in GitHub Actions on a schedule.
+// Pulls the latest Instagram posts and writes them into the site (downloaded
+// images + a JSON manifest) so the homepage feed auto-updates. Runs in GitHub
+// Actions on a schedule.
 //
-// Required env:
-//   IG_TOKEN   — long-lived Instagram access token (stored as a repo secret)
-// Optional env:
-//   IG_COUNT   — how many posts to show (default 9)
+// Works with EITHER token type:
+//   - Instagram Login token (graph.instagram.com/me/media)
+//   - Facebook Graph token "EAA..." (finds the connected IG Business account
+//     via the Facebook Page, then reads its media)
 //
-// If IG_TOKEN is missing it exits quietly (0) so the site keeps its curated grid.
+// Required env: IG_TOKEN   Optional env: IG_COUNT (default 9)
+// Missing token => exits 0 quietly so the curated grid stays in place.
 
 const fs = require('fs');
 const path = require('path');
 
 const TOKEN = process.env.IG_TOKEN;
 const COUNT = parseInt(process.env.IG_COUNT || '9', 10);
+const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
+const GV = 'v21.0';
 const IMG_DIR = path.join('assets', 'img', 'instagram');
 const DATA = path.join('assets', 'data', 'instagram.json');
 
@@ -22,16 +25,43 @@ if (!TOKEN) {
   process.exit(0);
 }
 
+async function getJson(url) {
+  const r = await fetch(url);
+  const body = await r.text();
+  if (!r.ok) throw new Error(r.status + ' ' + body.slice(0, 300));
+  return JSON.parse(body);
+}
+
+// Path A: Instagram Login token
+async function viaInstagramLogin(token) {
+  const j = await getJson(`https://graph.instagram.com/me/media?fields=${FIELDS}&limit=${COUNT}&access_token=${token}`);
+  return j.data || [];
+}
+
+// Path B: Facebook Graph token (EAA...) -> Page -> connected IG Business account
+async function viaFacebook(token) {
+  const acc = await getJson(`https://graph.facebook.com/${GV}/me/accounts?fields=name,access_token,instagram_business_account&access_token=${token}`);
+  const pages = acc.data || [];
+  const page = pages.find((p) => p.instagram_business_account);
+  if (!page) throw new Error('No Facebook Page with a connected Instagram Business account was found for this token.');
+  const igId = page.instagram_business_account.id;
+  const pageToken = page.access_token || token;
+  const j = await getJson(`https://graph.facebook.com/${GV}/${igId}/media?fields=${FIELDS}&limit=${COUNT}&access_token=${pageToken}`);
+  return j.data || [];
+}
+
 async function main() {
-  const fields = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
-  const url = `https://graph.instagram.com/me/media?fields=${fields}&limit=${COUNT}&access_token=${TOKEN}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    console.error('Instagram API error', res.status, (await res.text()).slice(0, 400));
+  const order = TOKEN.startsWith('EAA') ? [viaFacebook, viaInstagramLogin] : [viaInstagramLogin, viaFacebook];
+  let items = null, lastErr = null;
+  for (const fn of order) {
+    try { items = await fn(TOKEN); break; }
+    catch (e) { lastErr = e; console.error('Attempt failed:', e.message); }
+  }
+  if (items === null) {
+    console.error('Could not fetch Instagram media. Last error:', lastErr && lastErr.message);
     process.exit(1);
   }
-  const json = await res.json();
-  const items = (json.data || []).slice(0, COUNT);
+  items = items.slice(0, COUNT);
 
   fs.mkdirSync(IMG_DIR, { recursive: true });
   fs.mkdirSync(path.dirname(DATA), { recursive: true });
