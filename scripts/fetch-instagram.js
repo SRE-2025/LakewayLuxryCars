@@ -42,8 +42,10 @@ async function viaInstagramLogin(token) {
 async function viaFacebook(token) {
   const acc = await getJson(`https://graph.facebook.com/${GV}/me/accounts?fields=name,access_token,instagram_business_account&access_token=${token}`);
   const pages = acc.data || [];
+  if (!pages.length) throw new Error('This token can see 0 Facebook Pages — it is missing the pages_show_list / business_management permission. Regenerate the token and grant Page + Instagram permissions.');
   const page = pages.find((p) => p.instagram_business_account);
-  if (!page) throw new Error('No Facebook Page with a connected Instagram Business account was found for this token.');
+  if (!page) throw new Error('Token CAN see Page(s): [' + pages.map((p) => p.name).join(', ') + '] but NONE has a connected Instagram Business account. Fix: in Meta Business Suite, connect your Instagram (set to Business) to the Page, then regenerate the token.');
+  console.log('Connected OK via Facebook Page:', page.name);
   const igId = page.instagram_business_account.id;
   const pageToken = page.access_token || token;
   const j = await getJson(`https://graph.facebook.com/${GV}/${igId}/media?fields=${FIELDS}&limit=${COUNT}&access_token=${pageToken}`);
