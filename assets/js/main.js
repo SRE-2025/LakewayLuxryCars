@@ -66,7 +66,7 @@
   var form=document.getElementById('contactForm');
   if(form){
     var LEAD_EMAIL='lakewayluxurycarsuites@gmail.com';
-    var SHEET_URL='';/* paste the Google Apps Script Web App URL here — logs every lead to the Sheet + emails it via Gmail (failsafe capture + reliable delivery) */
+    var SHEET_URL='https://script.google.com/macros/s/AKfycbxCeJWIvZBKXYnWMrZbaVeMrdrKdV6rpDK1T_ac_-NVfSFDtBC3_nAPlZJqWZ8x6mXkUw/exec';/* Google Apps Script — logs every lead to the Sheet + emails via Gmail (primary, reliable) */
     var q=new URLSearchParams(location.search).get('unit')||new URLSearchParams(location.search).get('model');
     if(q){var msg=form.querySelector('#msg');if(msg)msg.value="I'm interested in "+q+". Please send availability, pricing, and a private tour.";}
     form.addEventListener('submit',function(e){e.preventDefault();
@@ -84,34 +84,34 @@
         _template:'table'
       };
       Object.keys(payload).forEach(function(k){if(payload[k]==='')delete payload[k];});
-      // Failsafe capture: log every lead to the Google Sheet + email via Gmail, fired regardless of FormSubmit's outcome
-      if(SHEET_URL&&SHEET_URL.indexOf('http')===0){ try{ fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}); }catch(e){} }
       if(btn){btn.textContent='Sending…';btn.disabled=true;}
-      fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(payload)})
-      .then(function(r){return r.json();})
-      .then(function(resp){
-        // Only treat as delivered when FormSubmit CONFIRMS it sent. A "success:false"
-        // (spam filter / rate limit) must NOT show a thank-you or fire a conversion,
-        // otherwise leads get silently lost while analytics over-counts them.
-        var delivered = resp && (resp.success===true || resp.success==='true');
-        if(!delivered){ throw new Error((resp && resp.message) || 'not delivered'); }
+      var succeeded=function(){
         if(note){note.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';note.style.color='#1c1a17';}
         if(btn){btn.textContent='Submitted ✓';}
-        // Conversion tracking — fires ONLY on a confirmed delivery
         try{ if(window.fbq) fbq('track','Lead'); }catch(e){}
-        try{ if(window.gtag){
-          gtag('event','generate_lead',{currency:'USD'});
-          var GADS_LABEL='';/* paste the label after AW-18363514208/ here to count it as a Google Ads conversion */
-          if(GADS_LABEL) gtag('event','conversion',{send_to:'AW-18363514208/'+GADS_LABEL});
-        } }catch(e){}
+        try{ if(window.gtag){ gtag('event','generate_lead',{currency:'USD'});
+          var GADS_LABEL='';/* paste the label after AW-18363514208/ to count as a Google Ads conversion */
+          if(GADS_LABEL) gtag('event','conversion',{send_to:'AW-18363514208/'+GADS_LABEL}); } }catch(e){}
         form.reset();
-      })
-      .catch(function(){
+      };
+      var failed=function(){
         if(note){note.innerHTML='We couldn’t send that automatically. Please email us directly at <a href="mailto:'+LEAD_EMAIL+'" style="border-bottom:1px solid currentColor">'+LEAD_EMAIL+'</a>.';note.style.color='#b3402e';}
         if(btn){btn.textContent='Try Again';btn.disabled=false;}
-      });
+      };
+      var backupFormSubmit=function(){ try{ fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}); }catch(e){} };
+      if(SHEET_URL&&SHEET_URL.indexOf('http')===0){
+        // Primary: Google Apps Script — logs the lead to the Sheet AND emails it via Gmail (reliable, readable response)
+        fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+          .then(function(r){return r.text();})
+          .then(function(t){ if(t&&t.indexOf('"ok":true')>-1){ succeeded(); } else { backupFormSubmit(); failed(); } })
+          .catch(function(){ backupFormSubmit(); failed(); });
+      } else {
+        // Fallback (no Sheet configured): FormSubmit, confirmed-delivery only
+        fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
+          .then(function(r){return r.json();})
+          .then(function(resp){ if(resp&&(resp.success===true||resp.success==='true')){ succeeded(); } else { failed(); } })
+          .catch(failed);
+      }
     });
   }
 })();
