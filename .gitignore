@@ -10,3 +10,6 @@ node_modules/
 # Python build helper (Pillow) artifacts
 __pycache__/
 *.pyc
+marketing/
+.indexnow-key
+.indexnow-urls.json
