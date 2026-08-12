@@ -91,6 +91,13 @@
       .then(function(){
         if(note){note.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';note.style.color='#1c1a17';}
         if(btn){btn.textContent='Submitted ✓';}
+        // Conversion tracking — fired only on a successful lead submission
+        try{ if(window.fbq) fbq('track','Lead'); }catch(e){}
+        try{ if(window.gtag){
+          gtag('event','generate_lead',{currency:'USD'});
+          var GADS_LABEL='';/* paste the label after AW-18363514208/ here to count it as a Google Ads conversion */
+          if(GADS_LABEL) gtag('event','conversion',{send_to:'AW-18363514208/'+GADS_LABEL});
+        } }catch(e){}
         form.reset();
       })
       .catch(function(){
