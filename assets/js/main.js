@@ -88,10 +88,15 @@
         headers:{'Content-Type':'application/json','Accept':'application/json'},
         body:JSON.stringify(payload)})
       .then(function(r){return r.json();})
-      .then(function(){
+      .then(function(resp){
+        // Only treat as delivered when FormSubmit CONFIRMS it sent. A "success:false"
+        // (spam filter / rate limit) must NOT show a thank-you or fire a conversion,
+        // otherwise leads get silently lost while analytics over-counts them.
+        var delivered = resp && (resp.success===true || resp.success==='true');
+        if(!delivered){ throw new Error((resp && resp.message) || 'not delivered'); }
         if(note){note.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';note.style.color='#1c1a17';}
         if(btn){btn.textContent='Submitted ✓';}
-        // Conversion tracking — fired only on a successful lead submission
+        // Conversion tracking — fires ONLY on a confirmed delivery
         try{ if(window.fbq) fbq('track','Lead'); }catch(e){}
         try{ if(window.gtag){
           gtag('event','generate_lead',{currency:'USD'});
