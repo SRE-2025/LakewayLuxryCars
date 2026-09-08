@@ -100,11 +100,16 @@
       };
       var backupFormSubmit=function(){ try{ fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}); }catch(e){} };
       if(SHEET_URL&&SHEET_URL.indexOf('http')===0){
-        // Primary: Google Apps Script — logs the lead to the Sheet AND emails it via Gmail (reliable, readable response)
-        fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
-          .then(function(r){return r.text();})
-          .then(function(t){ if(t&&t.indexOf('"ok":true')>-1){ succeeded(); } else { backupFormSubmit(); failed(); } })
-          .catch(function(){ backupFormSubmit(); failed(); });
+        // Primary: Google Apps Script — logs to Sheet + emails via Gmail.
+        // keepalive:true lets the request finish even if the visitor navigates away/closes the tab.
+        // Retries cover transient network/backend blips before giving up to the fallback.
+        var send=function(triesLeft){
+          fetch(SHEET_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+            .then(function(r){return r.text();})
+            .then(function(t){ if(t&&t.indexOf('"ok":true')>-1){ succeeded(); } else { throw new Error('bad response'); } })
+            .catch(function(){ if(triesLeft>0){ setTimeout(function(){send(triesLeft-1);},1500); } else { backupFormSubmit(); failed(); } });
+        };
+        send(2); // up to 3 attempts total
       } else {
         // Fallback (no Sheet configured): FormSubmit, confirmed-delivery only
         fetch('https://formsubmit.co/ajax/'+LEAD_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
