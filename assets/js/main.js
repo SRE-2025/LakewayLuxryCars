@@ -73,6 +73,8 @@
       var g=function(id){var el=document.getElementById(id);return el?(''+el.value).trim():'';};
       var note=document.getElementById('formNote');
       var btn=form.querySelector('button[type=submit]');
+      // Honeypot: a hidden field humans never see. If it's filled, it's a bot — quietly drop it.
+      if(g('hp')){ if(note){note.textContent='Thank you — your inquiry has been received. Our team will be in touch shortly.';note.style.color='#1c1a17';} if(btn){btn.textContent='Submitted ✓';btn.disabled=true;} return; }
       var first=g('fn'),last=g('ln'),email=g('em');
       if(!first||!last||!email){if(note){note.textContent='Please add your name and email so we can reach you.';note.style.color='#b3402e';}return;}
       var payload={
