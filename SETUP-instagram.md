@@ -1,66 +1,57 @@
-# Instagram Feed — Setup Guide
+# Lakeway Instagram feed
 
-The homepage has an Instagram section that can pull your **latest posts automatically**.
-Everything is already coded. It just needs **one access token** from you to turn on,
-because Instagram does not allow any website to read posts without one.
+The homepage keeps its existing curated photos until an authenticated refresh succeeds.
+Automatic scheduling is currently paused. Do not restore it until a real refresh and
+the resulting Pages build have both succeeded.
 
-Until you complete this, the site shows a nice **curated grid** of car/interior photos
-(no broken or empty section) — so there's no rush and nothing looks unfinished.
+## Account and credential
 
-Profile: https://www.instagram.com/lakewayluxurycarsuites/
+- Facebook Page: https://www.facebook.com/61591662253130
+- Instagram: https://www.instagram.com/lakewayluxurycarsuites/
+- Workflow: https://github.com/SRE-2025/LakewayLuxryCars/actions/workflows/instagram-feed.yml
+- Secrets: https://github.com/SRE-2025/LakewayLuxryCars/settings/secrets/actions
+- Meta account access: https://business.facebook.com/
 
----
+This workflow currently uses **Facebook Login** and the Page's linked Instagram
+professional account. A Meta Pixel or Conversions API token is not sufficient proof
+of permission to read Instagram posts. The authorizing account/app must have access
+to this Page and its linked Instagram account, with the applicable Instagram and
+Page read permissions. A business Instagram account alone does not grant this access.
 
-## What happens once it's on
-- A scheduled job runs **every 6 hours**, pulls your 9 most recent posts, and updates the site.
-- The homepage grid shows your **real latest posts**, each linking to Instagram.
-- Fully automatic after setup. No plugins, no third-party widget, no watermark.
+Save a replacement feed credential as **META_FEED_TOKEN** in GitHub Actions secrets.
+The older **IG_TOKEN** name is still supported as a fallback. The name is only a
+configuration key; renaming a token does not change its permissions.
+Never put credentials in public website code or repository files.
 
----
+If switching deliberately to Instagram Login, change IG_AUTH_MODE to instagram
+and use that product's token. Do not try a Facebook token on the Instagram host.
 
-## One-time setup (~10–15 minutes)
+## Verification
 
-### Step 1 — Make Instagram a Professional account
-In the Instagram app: **Settings → Account type and tools → Switch to professional account**
-→ choose **Business** or **Creator**. (Required by Instagram's API. It's free and reversible.)
+1. Sign into Meta with an account authorized for Lakeway's assets. Confirm the
+   intended Facebook Page is linked to @lakewayluxurycarsuites.
+2. Obtain the feed credential through the chosen Meta app's authorization flow and
+   save it in the secret above. Scope access to the intended Lakeway assets.
+3. Run the Instagram feed workflow manually on main.
+4. Confirm Fetch latest Instagram posts succeeds, records a nonzero post count,
+   and verifies the exact Instagram username.
+5. Confirm the feed commit and Publish refreshed feed steps succeed, then check
+   the resulting GitHub Pages deployment and homepage post links.
+6. Only then restore a schedule. Credential expiration or revoked permissions can
+   still interrupt future refreshes; expiry depends on the credential type.
 
-### Step 2 — Generate an access token (Meta)
-1. Go to **https://developers.facebook.com** and log in.
-2. **My Apps → Create App → App type: Business → Create.**
-3. In the app dashboard, **Add product → Instagram → set up.**
-4. Open **"API setup with Instagram login."**
-5. Add your Instagram account, then click **Generate token**.
-6. **Copy the long token** it gives you (this is a long-lived token).
+The script queries the configured Page directly, supports Page/user/system-user
+credentials only when their actual permissions allow the requested data, retries
+temporary network/server errors, and never selects another client's first Page.
+It downloads and validates the whole batch before replacing the manifest, preserves
+older photos on failure, and reports sanitized errors. It does not hide failed
+refreshes as successes.
 
-### Step 3 — Add the token to GitHub (this is the secure part)
-1. Go to the repo: **https://github.com/SRE-2025/LakewayLuxryCars**
-2. **Settings → Secrets and variables → Actions → New repository secret.**
-3. Name: **`IG_TOKEN`** (exactly). Value: **paste the token.** Click **Add secret.**
-   - ⚠️ Paste it here in GitHub — never in an email or chat. It's write-only; even you can't read it back.
+The workflow explicitly requests a Pages build after refresh because commits made
+with GITHUB_TOKEN do not automatically trigger a Pages build.
+See [GitHub's publishing documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-### Step 4 — Let the job update the site
-Same repo: **Settings → Actions → General → Workflow permissions →**
-select **"Read and write permissions" → Save.**
+## Local checks
 
-### Step 5 — Run it once now
-**Actions tab → "Instagram feed" (left side) → Run workflow → Run.**
-Wait ~1 minute, then hard-refresh the homepage — your real posts appear.
-After this, it runs by itself every 6 hours.
-
----
-
-## Maintenance
-- **The token expires about every 60 days.** When the feed stops updating, redo **Step 2**
-  and update the `IG_TOKEN` secret with the new token.
-- Want to never touch it again? Ask your developer to add the **auto-refresh** step
-  (it renews the token automatically before it expires).
-
-## How to change how many posts show
-In `.github/workflows/instagram-feed.yml`, change `IG_COUNT: '9'` to any number
-(6, 9, and 12 look best in the grid).
-
-## Troubleshooting
-- **Section still shows the curated photos?** The token isn't set yet, or the workflow
-  hasn't run — do Steps 3–5.
-- **Workflow failed?** Open the failed run in the Actions tab. The most common cause is an
-  expired or wrong token (redo Step 2) or Step 4 not done (read/write permissions).
+Run `node --test scripts/fetch-instagram.test.js`. Tests use mock responses, no
+credentials, and temporary files; they do not prove live Meta account access.
