@@ -1,8 +1,9 @@
 name: Instagram feed
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'   # every 6 hours
+  # Automatic refresh is paused: the saved token returns no Facebook Pages.
+  # Verify a manual run succeeds with the correct Page/Instagram access before
+  # restoring a schedule. Repeating the same failed request sends failure emails.
   workflow_dispatch:         # allows a manual run from the Actions tab
 
 permissions:
