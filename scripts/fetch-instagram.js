@@ -43,11 +43,14 @@ async function graph(host, endpoint, fields, token, cfg, fetchImpl, extra = {}) 
   try { body = await response.json(); } catch { throw new Error('Meta returned an unreadable response.'); }
   if (!response.ok || body.error) {
     const code = Number(body.error?.code) || response.status;
-    // Never print API response bodies: they may contain credentials or personal data.
+    // Report only a bounded, redacted diagnostic, never an API response body.
     const help = code === 190 ? 'The token is invalid or expired.'
       : [10, 100, 200].includes(code) ? 'Check the token permissions and its access to the configured Facebook Page and linked Instagram account.'
       : 'Check the Meta account connection before retrying.';
-    throw new Error('Meta ' + host + ' error ' + code + ' (HTTP ' + response.status + '). ' + help);
+    const detail = String(body.error?.message || '').split(token).join('[redacted]')
+      .replace(/(?:EAA|IGAA|IGQV)[A-Za-z0-9_-]+/g, '[redacted]')
+      .replace(/https?:\/\/\S+/g, '[URL]').replace(/[\r\n]/g, ' ').slice(0, 400);
+    throw new Error('Meta ' + host + ' error ' + code + ' (HTTP ' + response.status + '). ' + help + ' ' + detail);
   }
   return body;
 }
